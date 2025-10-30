@@ -1,0 +1,30 @@
+services:
+  db:
+    image: mysql:8.0.40
+    restart: unless-stopped
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: "hy360"
+      MYSQL_USER: "hy360"
+      MYSQL_PASSWORD: "hy360"
+      MYSQL_DATABASE: "testdb"
+      # MYSQL_ALLOW_EMPTY_PASSWORD: yes
+  web:
+    ports:
+      - 8000:80
+    build: .
+    restart: unless-stopped
+    depends_on:
+      - db
+  panel:
+    image: phpmyadmin
+    environment:
+      # PMA_HOST: db:6969
+      PMA_HOST: db
+    ports:
+      - 8001:80
+    depends_on:
+      - db
+  
+

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Input Form{% endblock %}
+{% block body %}
+<div class="info-form">
+    <form id="info-form" method="POST">
+        {% block form_fields %}
+        {% for data in input_fields %}
+        <label for="{{ data['id'] }}">{{ data['id'] }}:</label>
+        <input type="{{ data['type'] }}" id="{{ data['id'] }}" name="{{ data['id'] }}"
+               placeholder="{{ data['id'] }}"
+               {% if data['type'] != "checkbox" %}
+               required
+               {% endif %}
+               >
+        {% endfor %}
+        {% endblock %}
+        <input type="submit">
+    </form>
+</div>
+{% if results %}
+    <table class="results">
+        <!-- Header -->
+        <tr>
+            <th>A/A</th>
+            {% for val in results[0] %}
+            <th>{{ val }}</th>
+            {% endfor %}
+        </tr>
+
+        <!-- Data -->
+        {% for i, res in enum(results[1:]) %}
+        <tr>
+            <td>{{ i }}</td>
+            {% for val in res %}
+            <td>{{ val }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+{% endblock %}
